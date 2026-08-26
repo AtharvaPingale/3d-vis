@@ -56,9 +56,9 @@ Vite React App
  │    ├── parsers/stlParser.ts
  │    ├── parsers/gcodeParser.ts
  │    ├── parsers/gcodeCommands.ts   (command classification: travel/perimeter/infill/support/first-layer)
- │    ├── geometry/toolpathToBufferGeometry.ts
- │    ├── geometry/boundingBox.ts
- │    ├── analysis/stlAnalysis.ts    (volume, surface area, overhangs, thin walls)
+ │    (no separate geometry/ module — parsers build renderable typed-array
+ │     buffers and bounding boxes directly; see Phase 2a's architecture note)
+ │    ├── analysis/stlAnalysis.ts    (volume, surface area, center of mass, overhangs — done; thin walls not started)
  │    ├── analysis/gcodeAnalysis.ts  (filament use, time estimate, retractions)
  │    └── workers/
  │         ├── stlParser.worker.ts
