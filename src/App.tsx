@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { Dropzone } from './components/upload/Dropzone'
 import { AnalysisPanel } from './components/viewer/AnalysisPanel'
 import { Controls } from './components/viewer/Controls'
@@ -27,27 +28,27 @@ function UploadScreen() {
   const error = stlStatus === 'error' ? stlError : gcodeStatus === 'error' ? gcodeError : null
 
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-4 p-6">
+    <div className="flex h-full w-full flex-col items-center justify-center gap-4 p-4 sm:p-6">
       <div className="text-center">
-        <h1 className="text-2xl font-semibold text-slate-100">3D Print Viewer</h1>
-        <p className="mt-1 text-slate-400">
+        <h1 className="text-xl font-semibold text-slate-100 sm:text-2xl">3D Print Viewer</h1>
+        <p className="mt-1 text-sm text-slate-400 sm:text-base">
           Drop an STL to view and measure it, or a sliced G-code file to see its color-coded
           toolpath — all in your browser.
         </p>
       </div>
       <Dropzone />
-      <div className="flex gap-2">
+      <div className="flex flex-wrap justify-center gap-2">
         <button
           onClick={loadSampleModel}
           disabled={isLoading}
-          className="rounded-md bg-slate-800 px-3 py-1.5 text-sm text-slate-200 transition-colors hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-50"
+          className="rounded-md bg-slate-800 px-3 py-2 text-sm text-slate-200 transition-colors hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-50"
         >
           Try the sample model (STL)
         </button>
         <button
           onClick={loadSampleGcode}
           disabled={isLoading}
-          className="rounded-md bg-slate-800 px-3 py-1.5 text-sm text-slate-200 transition-colors hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-50"
+          className="rounded-md bg-slate-800 px-3 py-2 text-sm text-slate-200 transition-colors hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-50"
         >
           Try the sample toolpath (G-code)
         </button>
@@ -75,34 +76,51 @@ function UploadScreen() {
   )
 }
 
-function StlViewerScreen() {
+// Shared shell for both viewer screens: canvas + sidebar. Stacked
+// (canvas on top, sidebar below and scrollable) below the `lg` breakpoint;
+// side-by-side with a fixed-width sidebar above it, matching how much
+// screen real estate a mouse-and-keyboard session actually has.
+function ViewerLayout({ canvas, sidebar }: { canvas: ReactNode; sidebar: ReactNode }) {
   return (
-    <div className="flex h-full w-full gap-4 p-4">
-      <div className="min-w-0 flex-1 overflow-hidden rounded-xl border border-slate-800">
-        <SceneCanvas />
+    <div className="flex h-full w-full flex-col gap-4 p-4 lg:flex-row">
+      <div className="min-h-[45vh] w-full shrink-0 overflow-hidden rounded-xl border border-slate-800 lg:h-auto lg:min-h-0 lg:flex-1">
+        {canvas}
       </div>
-      <div className="flex w-72 shrink-0 flex-col gap-4 overflow-y-auto">
-        <StatsPanel />
-        <AnalysisPanel />
-        <Controls />
+      <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto lg:w-72 lg:flex-none">
+        {sidebar}
       </div>
     </div>
   )
 }
 
+function StlViewerScreen() {
+  return (
+    <ViewerLayout
+      canvas={<SceneCanvas />}
+      sidebar={
+        <>
+          <StatsPanel />
+          <AnalysisPanel />
+          <Controls />
+        </>
+      }
+    />
+  )
+}
+
 function GcodeViewerScreen() {
   return (
-    <div className="flex h-full w-full gap-4 p-4">
-      <div className="min-w-0 flex-1 overflow-hidden rounded-xl border border-slate-800">
-        <GcodeCanvas />
-      </div>
-      <div className="flex w-72 shrink-0 flex-col gap-4 overflow-y-auto">
-        <GcodeStatsPanel />
-        <PlaybackBar />
-        <LegendColorKey />
-        <GcodeControls />
-      </div>
-    </div>
+    <ViewerLayout
+      canvas={<GcodeCanvas />}
+      sidebar={
+        <>
+          <GcodeStatsPanel />
+          <PlaybackBar />
+          <LegendColorKey />
+          <GcodeControls />
+        </>
+      }
+    />
   )
 }
 
@@ -114,7 +132,10 @@ function App() {
   if (gcodeReady) screen = <GcodeViewerScreen />
   else if (stlReady) screen = <StlViewerScreen />
 
-  return <div className="h-screen w-screen bg-slate-950 text-slate-100">{screen}</div>
+  // h-dvh (dynamic viewport height) rather than h-screen — on mobile, 100vh
+  // includes the space behind the browser's address bar, which causes the
+  // page to overflow/jump as that chrome shows and hides on scroll.
+  return <div className="h-dvh w-screen bg-slate-950 text-slate-100">{screen}</div>
 }
 
 export default App

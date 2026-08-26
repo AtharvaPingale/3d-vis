@@ -105,7 +105,7 @@ Using typed arrays and transferable objects when passing data out of the worker 
 - [x] Lighting controls (not in the original plan, added ad hoc): ambient/key/fill intensity sliders + key light azimuth rotation, in Controls.tsx. No effect under Matcap shading (lighting-independent by design) — noted in the UI itself.
 - [ ] Simple clipping plane (single axis-aligned plane, draggable slider) using `THREE.Plane` + `renderer.clippingPlanes`
 - [ ] Empty/loading/error states for upload
-- [ ] Responsive layout (viewer works on a laptop screen at minimum; mobile can be basic)
+- [x] Responsive layout — viewer screens stack (canvas on top, sidebar below and independently scrollable) below the `lg` breakpoint instead of the fixed sidebar-beside-canvas desktop layout; root uses `h-dvh` instead of `h-screen` to avoid mobile browser-chrome viewport jumps; chip/toggle buttons sized up for touch. Not tested on a real device/emulator (no browser available in this sandbox) — worth a manual check.
 
 **Definition of done:** Can drop any reasonably-formed STL and get a clean, navigable, measured 3D view deployed at a public URL.
 

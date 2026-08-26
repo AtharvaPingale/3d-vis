@@ -20,7 +20,7 @@ export function LegendColorKey() {
           <button
             key={type}
             onClick={() => toggleCategory(type)}
-            className={`flex items-center gap-2 rounded-md px-1.5 py-1 text-left transition-colors hover:bg-slate-800 ${
+            className={`flex items-center gap-2 rounded-md px-1.5 py-2 text-left transition-colors hover:bg-slate-800 ${
               visible ? '' : 'opacity-40'
             }`}
           >

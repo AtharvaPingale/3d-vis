@@ -64,7 +64,7 @@ export function PlaybackBar() {
       <div className="flex items-center gap-2">
         <button
           onClick={() => stepLayer(-1)}
-          className="rounded-md bg-slate-800 px-2.5 py-1 hover:bg-slate-700"
+          className="rounded-md bg-slate-800 px-2.5 py-1.5 hover:bg-slate-700"
           aria-label="Step back one layer"
         >
           ◀
@@ -77,7 +77,7 @@ export function PlaybackBar() {
         </button>
         <button
           onClick={() => stepLayer(1)}
-          className="rounded-md bg-slate-800 px-2.5 py-1 hover:bg-slate-700"
+          className="rounded-md bg-slate-800 px-2.5 py-1.5 hover:bg-slate-700"
           aria-label="Step forward one layer"
         >
           ▶
@@ -90,7 +90,7 @@ export function PlaybackBar() {
           <button
             key={s}
             onClick={() => setSpeed(s)}
-            className={`rounded-md px-2 py-1 text-xs transition-colors ${
+            className={`rounded-md px-2 py-1.5 text-xs transition-colors ${
               speed === s
                 ? 'bg-sky-500 text-white'
                 : 'bg-slate-800 text-slate-300 hover:bg-slate-700'

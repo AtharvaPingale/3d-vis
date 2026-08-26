@@ -53,7 +53,7 @@ export function Controls() {
             <button
               key={m.value}
               onClick={() => setShadingMode(m.value)}
-              className={`rounded-md px-2.5 py-1 transition-colors ${
+              className={`rounded-md px-2.5 py-1.5 transition-colors ${
                 shadingMode === m.value
                   ? 'bg-sky-500 text-white'
                   : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
@@ -73,7 +73,7 @@ export function Controls() {
               <button
                 key={p.value}
                 onClick={() => setMatcapPreset(p.value)}
-                className={`rounded-md px-2.5 py-1 transition-colors ${
+                className={`rounded-md px-2.5 py-1.5 transition-colors ${
                   matcapPreset === p.value
                     ? 'bg-sky-500 text-white'
                     : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
@@ -103,7 +103,7 @@ export function Controls() {
             <button
               key={a.label}
               onClick={() => setClipAxis(a.value)}
-              className={`rounded-md px-2.5 py-1 transition-colors ${
+              className={`rounded-md px-2.5 py-1.5 transition-colors ${
                 clipAxis === a.value
                   ? 'bg-sky-500 text-white'
                   : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
